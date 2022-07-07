@@ -1,0 +1,28 @@
+.end-cursor::after {
+    content: '|';
+    color: #36373a;
+}
+
+.end-cursor.blinking::after {
+    content: '|';
+    color: #36373a;
+    animation: blink 1s step-start infinite;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+    
+}
+
+.typewriter {
+    display: flex;
+    justify-content: center;
+    font-size: 60px;
+    font-weight: 700;
+    color: red;
+    margin-top: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    height: 100px;
+}
