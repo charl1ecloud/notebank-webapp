@@ -26,14 +26,19 @@ need to manually download (sometimes)
 Create an **.env** file in the backend folder and include the following:
 
 ```bash
-  DATABASE_HOSTNAME=localhost
-  DATABASE_PORT=5432
-  DATABASE_PASSWORD=**YOUR DB PASSWORD**
-  DATABASE_NAME=fastapi
-  DATABASE_USERNAME=postgres
-  SECRET_KEY=thissecretkeyissostrong
-  ALGORITHM=HS256
-  ACCESS_TOKEN_EXPIRE_MINUTES=60
+DATABASE_HOSTNAME=localhost
+DATABASE_PORT=5432
+DATABASE_PASSWORD=<your password>
+DATABASE_NAME=fastapi
+DATABASE_USERNAME=postgres
+SECRET_KEY=thissecretkeyissostrong
+ALGORITHM=HS256
+ACCESS_TOKEN_EXPIRE_MINUTES=60
+EMAIL = "jackma2333@gmail.com"
+PASSWORD = "vunsldjtckdkpxrb"
+CONNECT_STR = "DefaultEndpointsProtocol=https;EndpointSuffix=core.windows.net;AccountName=notewebapp;AccountKey=Aonb9v5frCwz9LME/7MzdTdOWjwNZ+8tWl2QE90zkYkddxY7N7dFyacGWhphMVRJh7KpXziwOsQK+ASt/7dbUg==;BlobEndpoint=https://notewebapp.blob.core.windows.net/;FileEndpoint=https://notewebapp.file.core.windows.net/;QueueEndpoint=https://notewebapp.queue.core.windows.net/;TableEndpoint=https://notewebapp.table.core.windows.net/"
+NAME = "notes"
+KEY = "Aonb9v5frCwz9LME/7MzdTdOWjwNZ+8tWl2QE90zkYkddxY7N7dFyacGWhphMVRJh7KpXziwOsQK+ASt/7dbUg=="
 ```
 
 Remember to change the database_password field in the .env file to match with your own database's password.
