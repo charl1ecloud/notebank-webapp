@@ -15,6 +15,14 @@ Install dependencies for Python FastAPI backend.
   pip install -r requirements.txt
 ```
 
+note:
+```
+python-jose
+psycopg2
+```
+need to manually download (sometimes)
+
+
 Create an **.env** file in the backend folder and include the following:
 
 ```bash
@@ -49,7 +57,11 @@ Start fastAPI server
 
 ```bash
 cd backend
+python -m alembic upgrade head //to create table
 uvicorn app.main:app --reload
+or
+python -m uvicorn app.main:app --reload
+
 ```
 
 Start webpage
