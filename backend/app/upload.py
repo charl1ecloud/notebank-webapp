@@ -2,7 +2,7 @@ from azure.storage.blob.aio import BlobServiceClient
 from azure.storage.blob import ContentSettings, BlobClient, generate_blob_sas, BlobSasPermissions
 from azure.storage.blob import BlobServiceClient as blobClient
 
-from fastapi import UploadFile
+from fastapi import UploadFile, File
 from datetime import datetime, timedelta
 from dotenv import dotenv_values
 
@@ -16,7 +16,7 @@ container_name = NAME
 blob_service_client = blobClient.from_connection_string(connect_str)
 container_client = blob_service_client.get_container_client(container_name)
 
-async def uploadtoazure(file: UploadFile,file_name: str,file_type:str):
+async def uploadtoazure(file: UploadFile ,file_name: str,file_type:str):
 
     my_content_settings = ContentSettings(content_type=file_type)
     

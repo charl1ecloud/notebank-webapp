@@ -5,27 +5,12 @@ from typing import List, Optional
 from sqlalchemy import func
 from .. import models, schemas, oauth2
 from ..database import get_db
-from ..upload import *
+
 
 router = APIRouter(
     prefix="/posts",
     tags=['Posts']
 )
-
-@router.get("/showfiles")
-async def showfiles():
-    return showFiles()
-
-    
-@router.post("/uploadfile")
-async def create_upload_file(file: UploadFile):
-    name = file.filename
-    type = file.content_type
-    return await uploadtoazure(file,name,type)
-
-@router.get("/downloadfile")
-async def downloadfile(name: str):
-    return download(name)
 
 @router.get("/", response_model=List[schemas.PostOut])
 def get_posts(db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user), limit: int = 10, skip: int = 0, search: Optional[str] = ""):
