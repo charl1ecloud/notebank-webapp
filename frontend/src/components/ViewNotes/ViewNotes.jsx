@@ -4,6 +4,7 @@ import "./ViewNotes.css";
 // import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
 import { useState } from "react";
 // import { Document, Page } from 'react-pdf';
+import {Card,CardGroup, Row} from 'react-bootstrap'
 
 export default function ViewNotes({ name }) {
   const [doc, updateDoc] = useState(null);
@@ -18,6 +19,7 @@ export default function ViewNotes({ name }) {
     const url = "files/download?name=" + name;
     await axios.get(url).then(function (response) {
       window.location = response.data;
+
       updateDoc(response.data);
     });
   }
@@ -28,13 +30,26 @@ export default function ViewNotes({ name }) {
 
   return (
     <>
-      <div id="displayFiles">
-        <ul>
-          {name.map((n) => (
-            <li onClick={() => handleClick(n)}> {n} </li>
+  
+      {/* <div className="displayFiles"> */}
+      <Row xs={1} md={2} className="g-4">
+          {Object.keys(name).map((key) => (
+            // <div className="container">
+            
+            <Card style={{ width: "15rem" ,margin:"10px"}}>
+              <Card.Img
+                variant="top"
+                
+                src={name[key].replace(/\s/g, "%20")}
+              />
+              <Card.Body>
+                <Card.Title onClick={() => handleClick(key)}>{key}</Card.Title>
+              </Card.Body>
+            </Card>
+            // </div>
           ))}
-        </ul>
-      </div>
+      </Row>
+      {/* </div> */}
       {doc}
       {/* <Document file={doc} onLoadSuccess={onDocumentLoadSuccess}>
         <Page pageNumber={pageNumber} /> 

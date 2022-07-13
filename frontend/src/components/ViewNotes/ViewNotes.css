@@ -3,3 +3,17 @@
     color: red;
     cursor: pointer;
   }
+
+  .container{
+
+    overflow: hidden;
+    position: relative;
+  }
+  .displayFiles{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    
+    
+  }
