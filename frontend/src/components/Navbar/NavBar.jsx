@@ -11,9 +11,9 @@ export default function NavBar() {
     navigate("/register");
   };
 
-  const links = linkNames.map((name) => {
+  const links = linkNames.map((name,value) => {
     return (
-      <Link to={name == "Home" ? "/" : "/" + name.replace(/\s/g, "")}>
+      <Link key={value} to={name == "Home" ? "/" : "/" + name.replace(/\s/g, "")}>
         {name}
       </Link>
     );

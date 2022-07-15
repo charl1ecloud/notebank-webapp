@@ -21,3 +21,7 @@ async def create_upload_file(file: UploadFile = File(...)):
 @router.get("/download")
 async def downloadfile(name: str):
     return download(name,"notes")
+
+@router.delete("/delete")
+async def deletefile(name:str):
+    return await del_blob(name)
