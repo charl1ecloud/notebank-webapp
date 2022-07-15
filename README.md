@@ -1,4 +1,5 @@
 Tutorial https://www.youtube.com/watch?v=0sOvCWFmrtA&t=64639s&ab_channel=freeCodeCamp.org
+
 # Installation
 
 Install dependencies for React frontend.
@@ -16,12 +17,13 @@ Install dependencies for Python FastAPI backend.
 ```
 
 note:
+
 ```
 python-jose
 psycopg2
 ```
-need to manually download (sometimes)
 
+need to manually download (sometimes)
 
 Create an **.env** file in the backend folder and include the following:
 
@@ -44,19 +46,20 @@ KEY = "Aonb9v5frCwz9LME/7MzdTdOWjwNZ+8tWl2QE90zkYkddxY7N7dFyacGWhphMVRJh7KpXziwO
 Remember to change the database_password field in the .env file to match with your own database's password.
 
 ## pdf2image for thumbnail
+
 Library ReadMe: https://github.com/Belval/pdf2image#readme
 
 1. `pip install pdf2image`
 2. Install poppler: https://github.com/oschwartz10612/poppler-windows/releases/
 3. After download, add the bin/ folder to PATH. Tutorial:(https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/)
+4. download imageMagick https://docs.wand-py.org/en/latest/guide/install.html#install-imagemagick-on-windows
 
 Or:
+
 1. Download conda: https://www.anaconda.com/products/distribution
 2. Go to Anaconda Prompt
 3. `conda install -c conda-forge poppler`
-(亲测有效)
-
-
+   (亲测有效)
 
 ## Set up postgres on your machine
 
