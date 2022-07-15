@@ -13,7 +13,8 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+  }
 
-    
-    
+  .files:hover{
+    cursor:pointer;
   }
