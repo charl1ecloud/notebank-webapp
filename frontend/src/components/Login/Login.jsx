@@ -38,6 +38,7 @@ const Login = () => {
         headers: { "content-type": "application/x-www-form-urlencoded" },
         data: qs.stringify({ username: user, password: pwd }),
         url: LOGIN_URL,
+        withCredentials: true,
       };
 
       const response = await axios(options);

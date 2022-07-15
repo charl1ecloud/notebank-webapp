@@ -8,7 +8,7 @@ from .config import settings
 
 app = FastAPI()
 
-origins = ["*"]
+origins = ["http://localhost:8000", "http://localhost:3000"]
 
 app.add_middleware(
     CORSMiddleware,

@@ -1,12 +1,17 @@
 import React from "react";
 import "./Upload.css";
 import { Button } from "react-bootstrap";
+import useAxiosPrivate from "../../context/useAxiosPrivate";
 import axios from "../../api/axios";
 import { useState, useEffect } from "react";
 import { Alert } from "react-bootstrap";
 import ViewNotes from "../ViewNotes/ViewNotes";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default function Upload() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const axiosPrivate = useAxiosPrivate();
   const hiddenFileInput = React.useRef(null);
   const [file, uploadFile] = useState(null);
   const [submitted, updateSubmission] = useState(null);
@@ -23,27 +28,31 @@ export default function Upload() {
   }, []); //only runs once, refresh to see update
 
   async function handleSubmit() {
-    console.log(file[0].type);
     const formdata = new FormData();
     formdata.append("file", file[0]);
 
     const headers = { "Content-Type": file[0].type };
     SetLoading(true);
-    await axios.post("/files", formdata, headers).then(function (response) {
-      let msg = "";
-      if (response.data !== "Something went terribly wrong..") {
-        msg =
-          "Your file " +
-          response.data +
-          " has been uploaded. Refresh the page to see.";
-      } else {
-        msg = response.data;
-      }
+    try {
+      await axiosPrivate
+        .post("/files", formdata, headers)
+        .then(function (response) {
+          let msg = "";
+          if (response.data !== "Something went terribly wrong..") {
+            msg =
+              "Your file " +
+              response.data +
+              " has been uploaded. Refresh the page to see.";
+          } else {
+            msg = response.data;
+          }
 
-      updateSubmission(msg);
-      console.log(response);
-      SetLoading(false);
-    });
+          updateSubmission(msg);
+          SetLoading(false);
+        });
+    } catch (err) {
+      navigate("/signin", { state: { from: location }, replace: true });
+    }
   }
 
   function handleChange(e) {
@@ -93,6 +102,7 @@ export default function Upload() {
       <div id="alert" className="text-center mb-4">
         {submitted != null && <Alert variant="info">{submitted}</Alert>}
       </div>
+
       <ViewNotes name={name} />
     </>
   );

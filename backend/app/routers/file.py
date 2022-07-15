@@ -1,5 +1,6 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from ..upload import *
+from .. import oauth2
 
 router = APIRouter(
     prefix="/files",
@@ -12,7 +13,7 @@ async def allfiles():
 
     
 @router.post("/")
-async def create_upload_file(file: UploadFile = File(...)):
+async def create_upload_file(file: UploadFile = File(...), current_user: int = Depends(oauth2.get_current_user)):
     name = file.filename
     type = file.content_type
     return await uploadtoazure(file,name,type)

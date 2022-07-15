@@ -8,8 +8,10 @@ class Settings(BaseSettings):
     database_name: str
     database_username: str
     secret_key: str
+    secret_key_refresh: str
     algorithm: str
     access_token_expire_minutes: int
+    refresh_token_expire_minutes: int
     email: str
     password: str
     connect_str: str
