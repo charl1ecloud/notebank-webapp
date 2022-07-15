@@ -43,6 +43,21 @@ KEY = "Aonb9v5frCwz9LME/7MzdTdOWjwNZ+8tWl2QE90zkYkddxY7N7dFyacGWhphMVRJh7KpXziwO
 
 Remember to change the database_password field in the .env file to match with your own database's password.
 
+## pdf2image for thumbnail
+Library ReadMe: https://github.com/Belval/pdf2image#readme
+
+1. `pip install pdf2image`
+2. Install poppler: https://github.com/oschwartz10612/poppler-windows/releases/
+3. After download, add the bin/ folder to PATH. Tutorial:(https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/)
+
+Or:
+1. Download conda: https://www.anaconda.com/products/distribution
+2. Go to Anaconda Prompt
+3. `conda install -c conda-forge poppler`
+(亲测有效)
+
+
+
 ## Set up postgres on your machine
 
 **will update the set up method to use docker in next commit**
