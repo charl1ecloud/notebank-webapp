@@ -22,6 +22,7 @@ export default function Upload() {
     async function getnames() {
       await axios.get("/files").then(function (response) {
         updateName(response.data);
+        console.log(response)
       });
     }
     getnames();
@@ -71,6 +72,7 @@ export default function Upload() {
           <input
             className="center"
             type="file"
+            accept="application/pdf"
             ref={hiddenFileInput}
             style={{ display: "none" }}
             onChange={handleChange}

@@ -16,8 +16,13 @@ async def allfiles():
 async def create_upload_file(file: UploadFile = File(...), current_user: int = Depends(oauth2.get_current_user)):
     name = file.filename
     type = file.content_type
+    
     return await uploadtoazure(file,name,type)
 
 @router.get("/download")
 async def downloadfile(name: str):
-    return download(name)
+    return download(name,"notes")
+
+@router.delete("/delete")
+async def deletefile(name:str):
+    return await del_blob(name)
