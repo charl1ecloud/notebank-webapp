@@ -16,17 +16,9 @@ export default function Upload() {
   const [file, uploadFile] = useState(null);
   const [submitted, updateSubmission] = useState(null);
   const [loading, SetLoading] = useState(false);
-  const [name, updateName] = useState([]);
+  
 
-  useEffect(() => {
-    async function getnames() {
-      await axios.get("/files").then(function (response) {
-        updateName(response.data);
-        console.log(response)
-      });
-    }
-    getnames();
-  }, []); //only runs once, refresh to see update
+  
 
   async function handleSubmit() {
     const formdata = new FormData();
@@ -105,7 +97,7 @@ export default function Upload() {
         {submitted != null && <Alert variant="info">{submitted}</Alert>}
       </div>
 
-      <ViewNotes name={name} />
+      
     </>
   );
 }

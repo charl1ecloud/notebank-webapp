@@ -10,6 +10,7 @@ import Register from "./components/Signup/Register";
 import Login from "./components/Login/Login";
 import Profile from "./components/Profile/Profile";
 import PersistLogin from "./components/Login/PersistLogin";
+import ViewNotes from "./components/ViewNotes/ViewNotes";
 
 function App() {
   return (
@@ -28,7 +29,7 @@ function App() {
               <Route path="/profile" element={<Profile />} />
             </Route>
           </Route>
-
+          <Route path="/ViewNotes" element={<ViewNotes />} />
           <Route path="/register" element={<Register />} />
           <Route path="/signin" element={<Login />} />
         </Route>
