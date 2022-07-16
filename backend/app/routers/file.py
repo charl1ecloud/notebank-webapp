@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends
-from ..upload import *
+from ..fileutils import *
 from .. import oauth2
 
 router = APIRouter(
@@ -19,10 +19,10 @@ async def create_upload_file(file: UploadFile = File(...), current_user: int = D
     
     return await uploadtoazure(file,name,type)
 
-@router.get("/download")
+@router.get("/download/{name}")
 async def downloadfile(name: str):
     return download(name,"notes")
 
-@router.delete("/delete")
+@router.delete("/delete/{name}")
 async def deletefile(name:str):
     return await del_blob(name)

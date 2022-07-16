@@ -2,10 +2,8 @@ import React from "react";
 import "./Upload.css";
 import { Button } from "react-bootstrap";
 import useAxiosPrivate from "../../context/useAxiosPrivate";
-import axios from "../../api/axios";
 import { useState, useEffect } from "react";
 import { Alert } from "react-bootstrap";
-import ViewNotes from "../ViewNotes/ViewNotes";
 import { useNavigate, useLocation } from "react-router-dom";
 
 export default function Upload() {
@@ -16,9 +14,6 @@ export default function Upload() {
   const [file, uploadFile] = useState(null);
   const [submitted, updateSubmission] = useState(null);
   const [loading, SetLoading] = useState(false);
-  
-
-  
 
   async function handleSubmit() {
     const formdata = new FormData();
@@ -32,10 +27,7 @@ export default function Upload() {
         .then(function (response) {
           let msg = "";
           if (response.data !== "Something went terribly wrong..") {
-            msg =
-              "Your file " +
-              response.data +
-              " has been uploaded. Refresh the page to see.";
+            msg = "Your file has been uploaded";
           } else {
             msg = response.data;
           }
@@ -96,8 +88,6 @@ export default function Upload() {
       <div id="alert" className="text-center mb-4">
         {submitted != null && <Alert variant="info">{submitted}</Alert>}
       </div>
-
-      
     </>
   );
 }

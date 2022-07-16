@@ -8,35 +8,30 @@ from sqlalchemy import true
 from wand.image import Image
 from fastapi import UploadFile, File
 from datetime import datetime, timedelta
-from dotenv import dotenv_values
+from .config import settings
 from pdf2image import convert_from_bytes
 import io
 import cv2
 import glob
-from multiprocessing import Pool 
+from multiprocessing import Pool
 
-config = dotenv_values(".env")
-STR = config.get("CONNECT_STR")
-NAME = config.get("NAME")
-KEY = config.get("KEY")
-THUMBNAILSNAME = config.get("THUMBNAILS")
+CONNECT_STR = settings.connect_str
+NAME = settings.name
+KEY = settings.key
+THUMBNAILS = settings.thumbnails
 
-connect_str = STR
-container_name = NAME
-thumbnail_container_name = THUMBNAILSNAME
-
-blob_service_client = blobClient.from_connection_string(connect_str)
-container_client = blob_service_client.get_container_client(container_name)
-thumbnail_container = blob_service_client.get_container_client(thumbnail_container_name)
+blob_service_client = blobClient.from_connection_string(CONNECT_STR)
+container_client = blob_service_client.get_container_client(NAME)
+thumbnail_container = blob_service_client.get_container_client(THUMBNAILS)
 
 async def uploadtoazure(file: UploadFile ,file_name: str,file_type:str):
 
     my_content_settings = ContentSettings(content_type=file_type)
     
-    blob_service_client = BlobServiceClient.from_connection_string(connect_str)
+    blob_service_client = BlobServiceClient.from_connection_string(CONNECT_STR)
    
     async with blob_service_client:
-            container_client = blob_service_client.get_container_client(container_name)
+            container_client = blob_service_client.get_container_client(NAME)
             
             try:
                 blob_client = container_client.get_blob_client(file_name)
@@ -54,7 +49,7 @@ async def uploadtoazure(file: UploadFile ,file_name: str,file_type:str):
                 thumbnail = convert_pdf_to_png(f)
                 await blob_client_thumbnail.upload_blob(thumbnail,content_settings=ContentSettings(content_type="image/png"))
             except Exception as e:
-                pass # Temporary handling due to unknown error
+                pass
 
     
     return file_name
@@ -67,7 +62,7 @@ def showFiles():
     for blob in thumbnail_container.list_blobs():
         for key in returnList:
             if blob.name == key + "thumbnail":
-                returnList[key]=download(blob.name,thumbnail_container_name)
+                returnList[key]=download(blob.name,THUMBNAILS)
            
         
     return returnList
@@ -88,14 +83,9 @@ def download(n,container):
   
     return url
 
-    
-
-
-
 def convert_pdf_to_png(file):
     
-
-    page = convert_from_bytes(file, dpi=50, single_file=true)[0]
+    page = convert_from_bytes(file, dpi=50, single_file=true, poppler_path=f'{settings.poppler}')[0]
     
     img_byte_arr = io.BytesIO()
     # page.thumbnail()
@@ -105,10 +95,10 @@ def convert_pdf_to_png(file):
     return img_byte_arr
 
 async def del_blob(n):
-    blob_service_client = BlobServiceClient.from_connection_string(connect_str)
+    blob_service_client = BlobServiceClient.from_connection_string(CONNECT_STR)
    
     async with blob_service_client:
-            container_client = blob_service_client.get_container_client(container_name)
+            container_client = blob_service_client.get_container_client(NAME)
             
             try:
                 blob_client = container_client.get_blob_client(n)
