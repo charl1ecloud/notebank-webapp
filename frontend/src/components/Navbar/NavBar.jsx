@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 export default function NavBar() {
   let navigate = useNavigate();
 
-  const linkNames = ["Home", "Upload Note", "About Us", "Resources"];
+  const linkNames = ["Home", "Upload Note", "View Notes","About Us", "Resources"];
 
   const signupLink = () => {
     navigate("/register");
