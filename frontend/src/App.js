@@ -8,6 +8,8 @@ import React from "react";
 import Upload from "./components/UploadNote/Upload";
 import Register from "./components/Signup/Register";
 import Login from "./components/Login/Login";
+import Profile from "./components/Profile/Profile";
+import PersistLogin from "./components/Login/PersistLogin";
 
 function App() {
   return (
@@ -17,9 +19,16 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/result" element={<Home />} />
-          <Route element={<RequireAuth />}>
-            <Route path="/UploadNote" element={<Upload />} />
+
+          <Route element={<PersistLogin />}>
+            <Route element={<RequireAuth />}>
+              <Route path="/UploadNote" element={<Upload />} />
+            </Route>
+            <Route element={<RequireAuth />}>
+              <Route path="/profile" element={<Profile />} />
+            </Route>
           </Route>
+
           <Route path="/register" element={<Register />} />
           <Route path="/signin" element={<Login />} />
         </Route>

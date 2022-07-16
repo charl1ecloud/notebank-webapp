@@ -60,7 +60,7 @@ def verify_refresh_token(token: str, credentials_exception):
         if id is None:
             raise credentials_exception
         token_data = schemas.TokenData(id=id)
-    except JWTError:
+    except:
         raise credentials_exception
 
     return token_data

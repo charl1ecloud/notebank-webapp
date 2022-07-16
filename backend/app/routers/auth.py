@@ -27,7 +27,7 @@ def login(response: Response, user_credentials: OAuth2PasswordRequestForm = Depe
 
     return {"access_token": access_token, "token_type": "bearer"}
 
-@router.get('/refresh')
+@router.get('/refresh', response_model=schemas.Token)
 def refresh_token(request: Request, db: Session = Depends(database.get_db)):
     refresh_token: str = request.cookies.get("refresh_token")
     credentials_exception = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
@@ -41,3 +41,8 @@ def refresh_token(request: Request, db: Session = Depends(database.get_db)):
                             detail='The user belonging to this token no logger exist')
     access_token = oauth2.create_access_token(data={"user_id": user.id})
     return {"access_token": access_token, "token_type": "bearer"}
+
+@router.get('/logout')
+def logout(response: Response, current_user: int = Depends(oauth2.get_current_user)):
+    response.delete_cookie("refresh_token")
+    return {'status':'success'}
