@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import useLogout from "../../context/useLogout";
+import useLogout from "../context/useLogout";
 
 export default function Profile() {
   const navigate = useNavigate();
