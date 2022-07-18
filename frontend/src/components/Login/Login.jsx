@@ -4,6 +4,17 @@ import qs from "qs";
 import axios from "../../api/axios";
 import "../Signup/Register.css";
 import { useNavigate, useLocation } from "react-router-dom";
+import {
+  SigninMain,
+  SigninTitle,
+  LeftWrapper,
+  SigninForm,
+  SignupMessage,
+  SignupWrapper,
+  SignupLink,
+  FieldLabel,
+  FieldInput,
+} from "../../StyleComponent";
 
 const LOGIN_URL = "/login";
 
@@ -65,54 +76,57 @@ const Login = () => {
   }, [persist]);
 
   return (
-    <section>
-      <p
-        ref={errRef}
-        className={errMsg ? "errmsg" : "offscreen"}
-        aria-live="assertive"
-      >
-        {errMsg}
-      </p>
-      <h1>Sign In</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="username">Username:</label>
-        <input
-          type="text"
-          id="username"
-          ref={userRef}
-          autoComplete="off"
-          onChange={(e) => setUser(e.target.value)}
-          value={user}
-          required
-        />
-
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          onChange={(e) => setPwd(e.target.value)}
-          value={pwd}
-          required
-        />
-        <button>Sign In</button>
-        <div className="persistCheck">
-          <input
-            type="checkbox"
-            id="persist"
-            onChange={togglePersist}
-            checked={persist}
+    <SigninMain>
+      <LeftWrapper>
+        <p
+          ref={errRef}
+          className={errMsg ? "errmsg" : "offscreen"}
+          aria-live="assertive"
+        >
+          {errMsg}
+        </p>
+        <SigninTitle>
+          Sign-In to
+          <br />
+          access notes!
+        </SigninTitle>
+        <SignupWrapper>
+          <SignupMessage>Don't have an account yet?</SignupMessage>
+          <SignupLink href="/register">Sign Up</SignupLink>
+        </SignupWrapper>
+        <SigninForm onSubmit={handleSubmit}>
+          <FieldLabel htmlFor="username">Email:</FieldLabel>
+          <FieldInput
+            type="text"
+            id="username"
+            ref={userRef}
+            autoComplete="off"
+            onChange={(e) => setUser(e.target.value)}
+            value={user}
+            required
           />
-          <label htmlFor="persist">Trust this device</label>
-        </div>
-      </form>
-      <p>
-        Need an Account?
-        <br />
-        <span className="line">
-          <a href="/register">Sign Up</a>
-        </span>
-      </p>
-    </section>
+
+          <FieldLabel htmlFor="password">Password:</FieldLabel>
+          <FieldInput
+            type="password"
+            id="password"
+            onChange={(e) => setPwd(e.target.value)}
+            value={pwd}
+            required
+          />
+          <button>Sign In</button>
+          <div className="persistCheck">
+            <input
+              type="checkbox"
+              id="persist"
+              onChange={togglePersist}
+              checked={persist}
+            />
+            <label htmlFor="persist">Trust this device</label>
+          </div>
+        </SigninForm>
+      </LeftWrapper>
+    </SigninMain>
   );
 };
 

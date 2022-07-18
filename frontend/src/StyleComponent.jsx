@@ -175,3 +175,92 @@ export const BGimg = styled(Homepageimg)`
   transform: scale(1.2);
   margin-right: 100px;
 `;
+
+//Sign in page below
+
+export const SigninMain = styled.div`
+  position: absolute;
+  bottom: 0;
+  top: 100px;
+  background: linear-gradient(
+    90deg,
+    ${theme.main_color} 50%,
+    ${theme.background} 50%
+  );
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 150px 0 150px;
+  justify-content: space-between;
+`;
+
+export const SigninTitle = styled.div`
+  font-family: ${theme.main_font};
+  font-size: 70px;
+  font-weight: 700;
+  line-height: 80px;
+  color: ${theme.background};
+`;
+
+export const LeftWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 500px;
+`;
+
+export const SigninForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  flex-grow: 1;
+  padding-bottom: 1rem;
+  width: 100%;
+  margin-top: 35px;
+`;
+
+export const SignupWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+`;
+
+export const SignupMessage = styled.div`
+  font-family: ${theme.main_font};
+  font-size: 20px;
+  font-weight: 100;
+  line-height: 25px;
+  margin-top: 15px;
+  color: ${theme.background};
+`;
+
+export const SignupLink = styled.a`
+  color: ${theme.background};
+  font-family: ${theme.main_font};
+  font-size: 20px;
+  font-weight: 100;
+  line-height: 25px;
+  margin-top: 15px;
+  &:hover {
+    color: ${theme.second_color};
+  }
+`;
+
+export const FieldLabel = styled.label`
+  color: ${theme.background};
+  font-family: ${theme.main_font};
+  font-size: 20px;
+  font-weight: 100;
+  line-height: 25px;
+  margin-bottom: 5px;
+`;
+
+export const FieldInput = styled.input`
+  width: 100%;
+  height: 50px;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  margin-bottom: 10px;
+`;
