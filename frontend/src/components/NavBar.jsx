@@ -41,6 +41,10 @@ export default function NavBar() {
             className="fa-regular fa-circle-user"
             onClick={() => navigate("/profile")}
           ></i>
+        ) : window.location.pathname == "/signin" ? (
+          <SigninButton onClick={() => navigate("register")}>
+            Sign Up
+          </SigninButton>
         ) : (
           <SigninButton onClick={() => navigate("signin")}>
             Sign In

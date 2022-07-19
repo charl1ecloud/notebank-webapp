@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { ReactComponent as Homepageimg } from "./images/homepageimg.svg";
+import { ReactComponent as Signinimg } from "./images/signinbg.svg";
 
 const theme = {
-  main_color: "#2b4269",
+  main_color: "#1B3061",
   main_font: "'Poppins', sans-serif",
   text_color: "#000",
   second_color: "#f4900c",
@@ -20,6 +21,7 @@ export const NavbarWrapper = styled.div`
   align-items: center;
   position: sticky;
   padding: 0 100px 0 100px;
+  background-color: #f7f7f7;
 `;
 
 export const LinksWrapper = styled.div`
@@ -80,6 +82,7 @@ export const SigninButton = styled.button`
   font-weight: 600;
   margin: 0 0 0 30px;
   width: 120px;
+  height: 40px;
   &:hover {
     background-color: ${theme.main_color};
   }
@@ -190,7 +193,7 @@ export const SigninMain = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 0 150px 0 150px;
+  padding: 0 100px 0 200px;
   justify-content: space-between;
 `;
 
@@ -202,11 +205,12 @@ export const SigninTitle = styled.div`
   color: ${theme.background};
 `;
 
-export const LeftWrapper = styled.div`
+export const HalfWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: start;
-  width: 500px;
+  width: ${(props) => (props.width ? props.width : "500px")};
+  height: ${(props) => (props.height ? props.width : "600px")};
 `;
 
 export const SigninForm = styled.form`
@@ -250,10 +254,10 @@ export const SignupLink = styled.a`
 export const FieldLabel = styled.label`
   color: ${theme.background};
   font-family: ${theme.main_font};
-  font-size: 20px;
+  font-size: ${(props) => (props.font_size ? props.font_size : "20px")};
   font-weight: 100;
   line-height: 25px;
-  margin-bottom: 5px;
+  margin: ${(props) => props.margin};
 `;
 
 export const FieldInput = styled.input`
@@ -262,5 +266,56 @@ export const FieldInput = styled.input`
   border: none;
   border-radius: 5px;
   outline: none;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  text-indent: 15px;
+  font-family: ${theme.main_font};
+  font-weight: 600;
+`;
+
+export const FullWidthButton = styled.button`
+  background-color: ${(props) =>
+    props.bg_color ? props.bg_color : theme.second_color};
+  color: ${theme.background};
+  border: none;
+  border-radius: 5px;
+  font-size: ${theme.nav_size};
+  font-family: ${theme.main_font};
+  font-weight: 600;
+  width: ${(props) => (props.width ? props.width : "100%")};
+  height: 60px;
+  margin: ${(props) => props.margin};
+  &:hover {
+    transform: scale(1.03);
+  }
+`;
+
+export const PersistCheck = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+`;
+
+export const Checkbox = styled.input.attrs({ type: "checkbox" })`
+  height: 20px;
+  width: 20px;
+  margin: 0 5px 2px 2px;
+`;
+
+export const SigninImg = styled(Signinimg)`
+  transform: scale(0.8);
+  margin: 0px auto;
+`;
+
+export const PasswordHolder = styled.div`
+  position: relative;
+`;
+
+export const Eye = styled.i`
+  position: absolute;
+  right: 5%;
+  top: 25%;
+  transform: scale(1.5);
+  &:hover {
+    cursor: pointer;
+  }
 `;

@@ -2,18 +2,23 @@ import { useRef, useState, useEffect } from "react";
 import useAuth from "../../context/AuthProvider";
 import qs from "qs";
 import axios from "../../api/axios";
-import "../Signup/Register.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
   SigninMain,
   SigninTitle,
-  LeftWrapper,
+  HalfWrapper,
   SigninForm,
   SignupMessage,
   SignupWrapper,
   SignupLink,
   FieldLabel,
   FieldInput,
+  FullWidthButton,
+  PersistCheck,
+  Checkbox,
+  SigninImg,
+  PasswordHolder,
+  Eye,
 } from "../../StyleComponent";
 
 const LOGIN_URL = "/login";
@@ -31,6 +36,8 @@ const Login = () => {
   const [user, setUser] = useState("");
   const [pwd, setPwd] = useState("");
   const [errMsg, setErrMsg] = useState("");
+
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     userRef.current.focus();
@@ -61,7 +68,7 @@ const Login = () => {
       setPwd("");
       navigate(from, { replace: true });
     } catch (err) {
-      setErrMsg("Login Failed");
+      setErrMsg("* Login Failed");
 
       errRef.current.focus();
     }
@@ -77,14 +84,7 @@ const Login = () => {
 
   return (
     <SigninMain>
-      <LeftWrapper>
-        <p
-          ref={errRef}
-          className={errMsg ? "errmsg" : "offscreen"}
-          aria-live="assertive"
-        >
-          {errMsg}
-        </p>
+      <HalfWrapper>
         <SigninTitle>
           Sign-In to
           <br />
@@ -94,8 +94,18 @@ const Login = () => {
           <SignupMessage>Don't have an account yet?</SignupMessage>
           <SignupLink href="/register">Sign Up</SignupLink>
         </SignupWrapper>
+
         <SigninForm onSubmit={handleSubmit}>
-          <FieldLabel htmlFor="username">Email:</FieldLabel>
+          <p
+            ref={errRef}
+            className={errMsg ? "errmsg" : "offscreen"}
+            aria-live="assertive"
+          >
+            {errMsg}
+          </p>
+          <FieldLabel margin="0 0 5px 0" htmlFor="username">
+            Email:
+          </FieldLabel>
           <FieldInput
             type="text"
             id="username"
@@ -106,26 +116,55 @@ const Login = () => {
             required
           />
 
-          <FieldLabel htmlFor="password">Password:</FieldLabel>
-          <FieldInput
-            type="password"
-            id="password"
-            onChange={(e) => setPwd(e.target.value)}
-            value={pwd}
-            required
-          />
-          <button>Sign In</button>
-          <div className="persistCheck">
-            <input
+          <FieldLabel margin="0 0 5px 0" htmlFor="password">
+            Password:
+          </FieldLabel>
+          <PasswordHolder>
+            <FieldInput
+              type={visible ? "text" : "password"}
+              id="password"
+              onChange={(e) => setPwd(e.target.value)}
+              value={pwd}
+              required
+            />
+            {visible ? (
+              <Eye
+                className="fa-solid fa-eye"
+                onClick={() => setVisible((prev) => !prev)}
+              ></Eye>
+            ) : (
+              <Eye
+                className="fa-solid fa-eye-slash"
+                onClick={() => setVisible((prev) => !prev)}
+              ></Eye>
+            )}
+          </PasswordHolder>
+
+          <PersistCheck>
+            <Checkbox
               type="checkbox"
               id="persist"
               onChange={togglePersist}
               checked={persist}
             />
-            <label htmlFor="persist">Trust this device</label>
-          </div>
+            <FieldLabel font_size="15px" htmlFor="persist">
+              Keep me logged in
+            </FieldLabel>
+          </PersistCheck>
+
+          <FullWidthButton margin="30px 0 0 0">Sign In</FullWidthButton>
         </SigninForm>
-      </LeftWrapper>
+      </HalfWrapper>
+
+      <HalfWrapper height="1000px" width="750px">
+        <SigninImg />
+        <FullWidthButton width="500px" margin="20px auto" bg_color="#4285F4">
+          Continue with Google
+        </FullWidthButton>
+        <FullWidthButton width="500px" margin="20px auto" bg_color="#000">
+          Sign In with SSO
+        </FullWidthButton>
+      </HalfWrapper>
     </SigninMain>
   );
 };
