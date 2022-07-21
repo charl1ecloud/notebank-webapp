@@ -199,10 +199,10 @@ export const SigninMain = styled.div`
 
 export const SigninTitle = styled.div`
   font-family: ${theme.main_font};
-  font-size: 70px;
-  font-weight: 700;
+  font-size: ${props=>props.size?props.size:"70px"};
+  font-weight: 900;
   line-height: 80px;
-  color: ${theme.background};
+  color: ${props=>props.color?props.color:theme.background};
 `;
 
 export const HalfWrapper = styled.div`
@@ -235,19 +235,21 @@ export const SignupMessage = styled.div`
   font-size: 20px;
   font-weight: 100;
   line-height: 25px;
-  margin-top: 15px;
-  color: ${theme.background};
+  margin: ${props=>props.margin?props.margin:"15px 0 0 0"};
+  color: ${props=>props.color?props.color:theme.background};
 `;
 
-export const SignupLink = styled.a`
+export const SignupLink = styled.div`
   color: ${theme.background};
   font-family: ${theme.main_font};
   font-size: 20px;
   font-weight: 100;
   line-height: 25px;
   margin-top: 15px;
+  text-decoration: underline;
   &:hover {
     color: ${theme.second_color};
+    cursor: pointer;
   }
 `;
 
@@ -312,10 +314,43 @@ export const PasswordHolder = styled.div`
 
 export const Eye = styled.i`
   position: absolute;
-  right: 5%;
-  top: 25%;
+  right: ${props=>props.right?props.right:"5%"};
+  top: ${props=>props.top?props.top:"25%"};
+  color: ${theme.main_color};
   transform: scale(1.5);
   &:hover {
     cursor: pointer;
   }
 `;
+
+// Sign up pop up
+
+export const PopupForm = styled.div`
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  border: 3px solid #f1f1f1;
+  border-radius: 5px;
+  z-index: 9999;
+  background-color: ${theme.background};
+  width: 650px;
+  height: 700px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  padding: 20px;
+`
+
+export const FullScreenContainer = styled.div`
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(90, 90, 90, 0.95);
+  z-index: 9998;
+  display: ${props=>props.show?"block":"none"};
+`

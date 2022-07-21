@@ -19,6 +19,8 @@ import {
   SigninImg,
   PasswordHolder,
   Eye,
+  PopupForm,
+  FullScreenContainer
 } from "../../StyleComponent";
 
 const LOGIN_URL = "/login";
@@ -38,6 +40,7 @@ const Login = () => {
   const [errMsg, setErrMsg] = useState("");
 
   const [visible, setVisible] = useState(false);
+  const [showSignup, setShowSignup] = useState(false);
 
   useEffect(() => {
     userRef.current.focus();
@@ -92,8 +95,20 @@ const Login = () => {
         </SigninTitle>
         <SignupWrapper>
           <SignupMessage>Don't have an account yet?</SignupMessage>
-          <SignupLink href="/register">Sign Up</SignupLink>
+          <SignupLink onClick={() => setShowSignup((prev) => !prev)}>Sign Up</SignupLink>
         </SignupWrapper>
+        <FullScreenContainer show={showSignup}>
+          <PopupForm>
+              <SigninTitle color="black" size="50px">
+                Sign Up
+              </SigninTitle>
+              <SignupMessage color="black" margin="0">It's quick and easy.</SignupMessage>
+              <Eye right="4%" top="4%" className="fa-solid fa-circle-xmark" onClick={() => setShowSignup((prev) => !prev)}></Eye>
+              
+          </PopupForm>
+
+        </FullScreenContainer>
+        
 
         <SigninForm onSubmit={handleSubmit}>
           <p
