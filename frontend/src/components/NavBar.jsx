@@ -42,8 +42,8 @@ export default function NavBar() {
             onClick={() => navigate("/profile")}
           ></i>
         ) : window.location.pathname == "/signin" ? (
-          <SigninButton onClick={() => navigate("register")}>
-            Sign Up
+          <SigninButton disabled onClick={() => navigate("signin")}>
+            Sign In
           </SigninButton>
         ) : (
           <SigninButton onClick={() => navigate("signin")}>

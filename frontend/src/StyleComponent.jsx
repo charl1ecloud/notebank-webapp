@@ -83,8 +83,12 @@ export const SigninButton = styled.button`
   margin: 0 0 0 30px;
   width: 120px;
   height: 40px;
-  &:hover {
+  &:hover:enabled {
     background-color: ${theme.main_color};
+  }
+  &:disabled {
+    background-color: #a6a6a6;
+    color: ${theme.background};
   }
 `;
 
@@ -199,10 +203,10 @@ export const SigninMain = styled.div`
 
 export const SigninTitle = styled.div`
   font-family: ${theme.main_font};
-  font-size: ${props=>props.size?props.size:"70px"};
+  font-size: ${(props) => (props.size ? props.size : "70px")};
   font-weight: 900;
   line-height: 80px;
-  color: ${props=>props.color?props.color:theme.background};
+  color: ${(props) => (props.color ? props.color : theme.background)};
 `;
 
 export const HalfWrapper = styled.div`
@@ -235,8 +239,8 @@ export const SignupMessage = styled.div`
   font-size: 20px;
   font-weight: 100;
   line-height: 25px;
-  margin: ${props=>props.margin?props.margin:"15px 0 0 0"};
-  color: ${props=>props.color?props.color:theme.background};
+  margin: ${(props) => (props.margin ? props.margin : "15px 0 0 0")};
+  color: ${(props) => (props.color ? props.color : theme.background)};
 `;
 
 export const SignupLink = styled.div`
@@ -286,8 +290,12 @@ export const FullWidthButton = styled.button`
   width: ${(props) => (props.width ? props.width : "100%")};
   height: 60px;
   margin: ${(props) => props.margin};
-  &:hover {
+  &:hover:enabled {
     transform: scale(1.03);
+  }
+  &:disabled {
+    background-color: #a6a6a6;
+    color: ${theme.background};
   }
 `;
 
@@ -314,8 +322,8 @@ export const PasswordHolder = styled.div`
 
 export const Eye = styled.i`
   position: absolute;
-  right: ${props=>props.right?props.right:"5%"};
-  top: ${props=>props.top?props.top:"25%"};
+  right: ${(props) => (props.right ? props.right : "5%")};
+  top: ${(props) => (props.top ? props.top : "25%")};
   color: ${theme.main_color};
   transform: scale(1.5);
   &:hover {
@@ -327,22 +335,21 @@ export const Eye = styled.i`
 
 export const PopupForm = styled.div`
   position: absolute;
-  top:0;
+  top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   margin: auto;
-  border: 3px solid #f1f1f1;
   border-radius: 5px;
   z-index: 9999;
   background-color: ${theme.background};
-  width: 650px;
-  height: 700px;
+  width: 35%;
+  height: 80%;
   display: flex;
   flex-direction: column;
   align-items: start;
   padding: 20px;
-`
+`;
 
 export const FullScreenContainer = styled.div`
   position: fixed;
@@ -352,5 +359,57 @@ export const FullScreenContainer = styled.div`
   right: 0;
   background: rgba(90, 90, 90, 0.95);
   z-index: 9998;
-  display: ${props=>props.show?"block":"none"};
-`
+  display: ${(props) => (props.show ? "block" : "none")};
+`;
+
+export const GridForm = styled.form`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
+  width: 100%;
+  margin-top: 20px;
+`;
+
+export const GridLabel = styled.label`
+  display: block;
+  font-family: ${theme.main_font};
+  font-size: ${(props) => (props.font_size ? props.font_size : "20px")};
+  font-weight: 500;
+  line-height: 25px;
+`;
+
+export const FullGridRow = styled.div`
+  grid-column: 1 / 3;
+`;
+
+export const SignupInput = styled.input`
+  width: 100%;
+  height: 40px;
+  outline: none;
+  border: 1px solid #a6a6a6;
+  border-radius: 5px;
+  text-indent: 10px;
+  font-family: ${theme.main_font};
+  font-weight: 500;
+  &:focus {
+    border: 1px solid ${theme.second_color};
+  }
+`;
+
+export const CenterDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+`;
+
+export const GreyMessage = styled.p`
+  width: ${(props) => (props.width ? props.width : "100%")};
+  color: #a6a6a6;
+  font-family: ${theme.main_font};
+  font-size: ${(props) => (props.font_size ? props.font_size : "15px")};
+  font-weight: 500;
+  line-height: 25px;
+  margin-top: 15px;
+  text-align: center;
+`;

@@ -7,8 +7,18 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "../../api/axios";
 import "./Register.css";
+import React from "react";
+import {
+  GridForm,
+  GridLabel,
+  FullGridRow,
+  FullWidthButton,
+  SignupInput,
+  CenterDiv,
+  GreyMessage,
+} from "../../StyleComponent";
 
-const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+const PWD_REGEX = /^.{8,24}$/;
 const REGISTER_URL = "/users";
 
 const Register = () => {
@@ -85,19 +95,44 @@ const Register = () => {
           </section>
         </div>
       ) : (
-        <div className="register-container">
-          <section>
-            <p
-              ref={errRef}
-              className={errMsg ? "errmsg" : "offscreen"}
-              aria-live="assertive"
-            >
-              {errMsg}
-            </p>
-            <h1>Register</h1>
-            <form onSubmit={handleSubmit}>
-              <label htmlFor="username">Username:</label>
-              <input
+        <React.Fragment>
+          <p
+            ref={errRef}
+            className={errMsg ? "errmsg" : "offscreen"}
+            aria-live="assertive"
+          >
+            {errMsg}
+          </p>
+          <GridForm onSubmit={handleSubmit} id="signupform">
+            <div>
+              <GridLabel font_size="15px" htmlFor="firstname">
+                First Name
+              </GridLabel>
+              <SignupInput
+                type="text"
+                id="firstname"
+                autoComplete="off"
+                required
+              />
+            </div>
+
+            <div>
+              <GridLabel font_size="15px" htmlFor="lastname">
+                Last Name
+              </GridLabel>
+              <SignupInput
+                type="text"
+                id="lastname"
+                autoComplete="off"
+                required
+              />
+            </div>
+
+            <FullGridRow>
+              <GridLabel font_size="15px" htmlFor="username">
+                Email address
+              </GridLabel>
+              <SignupInput
                 type="text"
                 id="username"
                 ref={userRef}
@@ -108,8 +143,10 @@ const Register = () => {
                 onFocus={() => setUserFocus(true)}
                 onBlur={() => setUserFocus(false)}
               />
-              <label htmlFor="password">
-                Password:
+            </FullGridRow>
+            <FullGridRow>
+              <GridLabel font_size="15px" htmlFor="password">
+                Password
                 <FontAwesomeIcon
                   icon={faCheck}
                   className={validPwd ? "valid" : "hide"}
@@ -118,8 +155,9 @@ const Register = () => {
                   icon={faTimes}
                   className={validPwd || !pwd ? "hide" : "invalid"}
                 />
-              </label>
-              <input
+              </GridLabel>
+
+              <SignupInput
                 type="password"
                 id="password"
                 onChange={(e) => setPwd(e.target.value)}
@@ -129,27 +167,12 @@ const Register = () => {
                 aria-describedby="pwdnote"
                 onFocus={() => setPwdFocus(true)}
                 onBlur={() => setPwdFocus(false)}
+                placeholder="Use 8-24 characters"
               />
-              <p
-                id="pwdnote"
-                className={pwdFocus && !validPwd ? "instructions" : "offscreen"}
-              >
-                <FontAwesomeIcon icon={faInfoCircle} />
-                8 to 24 characters.
-                <br />
-                Must include uppercase and lowercase letters, a number and a
-                special character.
-                <br />
-                Allowed special characters:{" "}
-                <span aria-label="exclamation mark">!</span>{" "}
-                <span aria-label="at symbol">@</span>{" "}
-                <span aria-label="hashtag">#</span>{" "}
-                <span aria-label="dollar sign">$</span>{" "}
-                <span aria-label="percent">%</span>
-              </p>
-
-              <label htmlFor="confirm_pwd">
-                Confirm Password:
+            </FullGridRow>
+            <FullGridRow>
+              <GridLabel font_size="15px" htmlFor="confirm_pwd">
+                Confirm Password
                 <FontAwesomeIcon
                   icon={faCheck}
                   className={validMatch && matchPwd ? "valid" : "hide"}
@@ -158,8 +181,8 @@ const Register = () => {
                   icon={faTimes}
                   className={validMatch || !matchPwd ? "hide" : "invalid"}
                 />
-              </label>
-              <input
+              </GridLabel>
+              <SignupInput
                 type="password"
                 id="confirm_pwd"
                 onChange={(e) => setMatchPwd(e.target.value)}
@@ -170,30 +193,35 @@ const Register = () => {
                 onFocus={() => setMatchFocus(true)}
                 onBlur={() => setMatchFocus(false)}
               />
-              <p
-                id="confirmnote"
-                className={
-                  matchFocus && !validMatch ? "instructions" : "offscreen"
-                }
-              >
-                <FontAwesomeIcon icon={faInfoCircle} />
-                Must match the first password input field.
-              </p>
-
-              <button disabled={!validPwd || !validMatch ? true : false}>
-                Sign Up
-              </button>
-            </form>
-            <p>
-              Already registered?
-              <br />
-              <span className="line">
-                {/*put router link here*/}
-                <a href="/signin">Sign In</a>
-              </span>
-            </p>
-          </section>
-        </div>
+            </FullGridRow>
+            <div>
+              <GridLabel font_size="15px" htmlFor="degree">
+                Field of degree
+              </GridLabel>
+              <SignupInput
+                type="text"
+                id="degree"
+                autoComplete="off"
+                required
+              />
+            </div>
+          </GridForm>
+          <CenterDiv>
+            <GreyMessage width="80%">
+              By clicking "Sign Up", you agree to our Terms, Data Policy, Cookie
+              Policy and Anti-Spam Policy. You may receive SMS/Email
+              notifications from us and can opt out at any time.
+            </GreyMessage>
+            <FullWidthButton
+              type="submit"
+              form="signupform"
+              width="350px"
+              disabled={!validPwd || !validMatch ? true : false}
+            >
+              Sign Up
+            </FullWidthButton>
+          </CenterDiv>
+        </React.Fragment>
       )}
     </>
   );

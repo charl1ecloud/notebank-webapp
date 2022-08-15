@@ -20,8 +20,9 @@ import {
   PasswordHolder,
   Eye,
   PopupForm,
-  FullScreenContainer
+  FullScreenContainer,
 } from "../../StyleComponent";
+import Register from "../Signup/Register";
 
 const LOGIN_URL = "/login";
 
@@ -95,20 +96,27 @@ const Login = () => {
         </SigninTitle>
         <SignupWrapper>
           <SignupMessage>Don't have an account yet?</SignupMessage>
-          <SignupLink onClick={() => setShowSignup((prev) => !prev)}>Sign Up</SignupLink>
+          <SignupLink onClick={() => setShowSignup((prev) => !prev)}>
+            Sign Up
+          </SignupLink>
         </SignupWrapper>
         <FullScreenContainer show={showSignup}>
           <PopupForm>
-              <SigninTitle color="black" size="50px">
-                Sign Up
-              </SigninTitle>
-              <SignupMessage color="black" margin="0">It's quick and easy.</SignupMessage>
-              <Eye right="4%" top="4%" className="fa-solid fa-circle-xmark" onClick={() => setShowSignup((prev) => !prev)}></Eye>
-              
+            <SigninTitle color="black" size="50px">
+              Sign Up
+            </SigninTitle>
+            <SignupMessage color="black" margin="0">
+              It's quick and easy.
+            </SignupMessage>
+            <Eye
+              right="4%"
+              top="4%"
+              className="fa-solid fa-circle-xmark"
+              onClick={() => setShowSignup((prev) => !prev)}
+            ></Eye>
+            <Register />
           </PopupForm>
-
         </FullScreenContainer>
-        
 
         <SigninForm onSubmit={handleSubmit}>
           <p
