@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { ReactComponent as Homepageimg } from "./images/homepageimg.svg";
 import { ReactComponent as Signinimg } from "./images/signinbg.svg";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const theme = {
   main_color: "#1B3061",
@@ -412,4 +413,24 @@ export const GreyMessage = styled.p`
   line-height: 25px;
   margin-top: 15px;
   text-align: center;
+`;
+
+export const ErrorMessage = styled.p`
+  color: red;
+  font-weight: bold;
+  position: ${(props) => (props.error === "" ? "absolute" : "static")};
+  left: ${(props) => (props.error === "" ? "-9999px" : "0")};
+  margin: ${(props) => (props.margin ? props.margin : "0 0 10px 0")};
+`;
+
+export const ValidIcon = styled(FontAwesomeIcon)`
+  display: ${(props) => (props.valid === true ? "inline" : "none")};
+  color: limegreen;
+  margin-left: 0.25rem;
+`;
+
+export const InvalidIcon = styled(FontAwesomeIcon)`
+  display: ${(props) => (props.valid === true ? "none" : "inline")};
+  color: red;
+  margin-left: 0.25rem;
 `;

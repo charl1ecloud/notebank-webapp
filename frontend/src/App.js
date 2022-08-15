@@ -5,7 +5,7 @@ import Home from "./Home";
 import { Routes, Route } from "react-router-dom";
 import React from "react";
 import Upload from "./components/UploadNote/Upload";
-import Register from "./components/Signup/Register";
+import Register from "./components/Register";
 import Login from "./components/Login/Login";
 import Profile from "./components/Profile";
 import PersistLogin from "./components/Login/PersistLogin";

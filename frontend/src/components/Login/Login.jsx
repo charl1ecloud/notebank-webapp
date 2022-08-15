@@ -21,8 +21,9 @@ import {
   Eye,
   PopupForm,
   FullScreenContainer,
+  ErrorMessage,
 } from "../../StyleComponent";
-import Register from "../Signup/Register";
+import Register from "../Register";
 
 const LOGIN_URL = "/login";
 
@@ -119,13 +120,9 @@ const Login = () => {
         </FullScreenContainer>
 
         <SigninForm onSubmit={handleSubmit}>
-          <p
-            ref={errRef}
-            className={errMsg ? "errmsg" : "offscreen"}
-            aria-live="assertive"
-          >
+          <ErrorMessage ref={errRef} error={errMsg} aria-live="assertive">
             {errMsg}
-          </p>
+          </ErrorMessage>
           <FieldLabel margin="0 0 5px 0" htmlFor="username">
             Email:
           </FieldLabel>

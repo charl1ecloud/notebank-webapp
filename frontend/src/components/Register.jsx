@@ -1,12 +1,6 @@
 import { useRef, useState, useEffect } from "react";
-import {
-  faCheck,
-  faTimes,
-  faInfoCircle,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from "../../api/axios";
-import "./Register.css";
+import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
+import axios from "../api/axios";
 import React from "react";
 import {
   GridForm,
@@ -16,7 +10,10 @@ import {
   SignupInput,
   CenterDiv,
   GreyMessage,
-} from "../../StyleComponent";
+  ErrorMessage,
+  ValidIcon,
+  InvalidIcon,
+} from "../StyleComponent";
 
 const PWD_REGEX = /^.{8,24}$/;
 const REGISTER_URL = "/users";
@@ -26,15 +23,12 @@ const Register = () => {
   const errRef = useRef();
 
   const [user, setUser] = useState("");
-  const [userFocus, setUserFocus] = useState(false);
 
   const [pwd, setPwd] = useState("");
   const [validPwd, setValidPwd] = useState(false);
-  const [pwdFocus, setPwdFocus] = useState(false);
 
   const [matchPwd, setMatchPwd] = useState("");
   const [validMatch, setValidMatch] = useState(false);
-  const [matchFocus, setMatchFocus] = useState(false);
 
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
@@ -55,7 +49,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!PWD_REGEX.test(pwd)) {
-      setErrMsg("Invalid Password");
+      setErrMsg("* Invalid Password");
       return;
     }
     try {
@@ -75,9 +69,9 @@ const Register = () => {
       setMatchPwd("");
     } catch (err) {
       if (!err?.response) {
-        setErrMsg("No Server Response");
+        setErrMsg("* No Server Response");
       } else {
-        setErrMsg("Registration Failed");
+        setErrMsg("* Registration Failed");
       }
       errRef.current.focus();
     }
@@ -91,18 +85,21 @@ const Register = () => {
             <h1>Success!</h1>
             <p>
               <a href="/signin">Sign In</a>
+              <br />
+              Todo: add email verify
             </p>
           </section>
         </div>
       ) : (
         <React.Fragment>
-          <p
+          <ErrorMessage
             ref={errRef}
-            className={errMsg ? "errmsg" : "offscreen"}
+            error={errMsg}
             aria-live="assertive"
+            margin="10px 0 -10px 0"
           >
             {errMsg}
-          </p>
+          </ErrorMessage>
           <GridForm onSubmit={handleSubmit} id="signupform">
             <div>
               <GridLabel font_size="15px" htmlFor="firstname">
@@ -140,21 +137,13 @@ const Register = () => {
                 onChange={(e) => setUser(e.target.value)}
                 value={user}
                 required
-                onFocus={() => setUserFocus(true)}
-                onBlur={() => setUserFocus(false)}
               />
             </FullGridRow>
             <FullGridRow>
               <GridLabel font_size="15px" htmlFor="password">
                 Password
-                <FontAwesomeIcon
-                  icon={faCheck}
-                  className={validPwd ? "valid" : "hide"}
-                />
-                <FontAwesomeIcon
-                  icon={faTimes}
-                  className={validPwd || !pwd ? "hide" : "invalid"}
-                />
+                <ValidIcon icon={faCheck} valid={validPwd} />
+                <InvalidIcon icon={faTimes} valid={validPwd || !pwd} />
               </GridLabel>
 
               <SignupInput
@@ -165,22 +154,17 @@ const Register = () => {
                 required
                 aria-invalid={validPwd ? "false" : "true"}
                 aria-describedby="pwdnote"
-                onFocus={() => setPwdFocus(true)}
-                onBlur={() => setPwdFocus(false)}
                 placeholder="Use 8-24 characters"
               />
             </FullGridRow>
             <FullGridRow>
               <GridLabel font_size="15px" htmlFor="confirm_pwd">
                 Confirm Password
-                <FontAwesomeIcon
+                <ValidIcon
                   icon={faCheck}
-                  className={validMatch && matchPwd ? "valid" : "hide"}
+                  valid={validMatch && matchPwd !== ""}
                 />
-                <FontAwesomeIcon
-                  icon={faTimes}
-                  className={validMatch || !matchPwd ? "hide" : "invalid"}
-                />
+                <InvalidIcon icon={faTimes} valid={validMatch || !matchPwd} />
               </GridLabel>
               <SignupInput
                 type="password"
@@ -190,8 +174,6 @@ const Register = () => {
                 required
                 aria-invalid={validMatch ? "false" : "true"}
                 aria-describedby="confirmnote"
-                onFocus={() => setMatchFocus(true)}
-                onBlur={() => setMatchFocus(false)}
               />
             </FullGridRow>
             <div>
@@ -212,12 +194,7 @@ const Register = () => {
               Policy and Anti-Spam Policy. You may receive SMS/Email
               notifications from us and can opt out at any time.
             </GreyMessage>
-            <FullWidthButton
-              type="submit"
-              form="signupform"
-              width="350px"
-              disabled={!validPwd || !validMatch ? true : false}
-            >
+            <FullWidthButton type="submit" form="signupform" width="350px">
               Sign Up
             </FullWidthButton>
           </CenterDiv>
