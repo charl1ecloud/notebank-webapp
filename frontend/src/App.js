@@ -18,11 +18,10 @@ function App() {
       <PageLayout>
         <NavBar />
         <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/result" element={<Home />} />
-
-            <Route element={<PersistLogin />}>
+          <Route element={<PersistLogin />}>
+            <Route path="/" element={<Layout />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/result" element={<Home />} />
               <Route element={<RequireAuth />}>
                 <Route path="/UploadNote" element={<Upload />} />
               </Route>

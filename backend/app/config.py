@@ -2,11 +2,10 @@ from pydantic import BaseSettings
 
 
 class Settings(BaseSettings):
-    database_hostname: str
-    database_port: str
-    database_password: str
-    database_name: str
-    database_username: str
+    database_host: str
+    postgres_password: str
+    postgres_db: str
+    postgres_user: str
     secret_key: str
     secret_key_refresh: str
     algorithm: str

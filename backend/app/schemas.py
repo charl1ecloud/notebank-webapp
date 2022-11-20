@@ -1,55 +1,78 @@
 from pydantic import BaseModel, EmailStr
 from datetime import datetime
-from typing import Optional
-
+from typing import Optional, List
 from pydantic.types import conint
 
-
-class PostBase(BaseModel):
+class NoteBase(BaseModel):
     title: str
-    content: str
-    published: bool = True
+    code: str
+    language: str
+    link_of_file: str
+    year: int
 
 
-class PostCreate(PostBase):
+class NoteCreate(NoteBase):
     pass
+
+
+class UserBase(BaseModel):
+    email: EmailStr
+    password: str
+    username: str
 
 
 class UserOut(BaseModel):
     id: int
     email: EmailStr
+    username: str
     created_at: datetime
 
     class Config:
         orm_mode = True
 
-
-class Post(PostBase):
+class Note(NoteBase):
     id: int
-    created_at: datetime
-    owner_id: int
+    uploaded_at: datetime
+    owner_name: str
     owner: UserOut
 
     class Config:
         orm_mode = True
 
+class UserDisplay(BaseModel):
+    username: str
+    notes: List[Note]
+    email: EmailStr
+    profile_pic_url: str
 
-class PostOut(BaseModel):
-    Post: Post
-    votes: int
+class CommentBase(BaseModel):
+    rating: int
+    review_text: Optional[str] = None
+    note_id: int
+
+class CommentDisplay(BaseModel):
+    rating: int
+    review_text: Optional[str] = None
+    username: str
+    timestamp: datetime
+
+    class Config:
+        orm_mode = True
+
+class CommentOut(CommentBase):
+    id: int
+    owner_name: str
+    timestamp: datetime
 
     class Config:
         orm_mode = True
 
 
-class UserCreate(BaseModel):
-    email: EmailStr
-    password: str
+class NoteDisplay(Note):
+    comments: Optional[List[CommentOut]]
 
-
-class UserLogin(BaseModel):
-    email: EmailStr
-    password: str
+    class Config:
+        orm_mode = True
 
 
 class Token(BaseModel):
@@ -59,8 +82,3 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     id: Optional[str] = None
-
-
-class Vote(BaseModel):
-    post_id: int
-    dir: conint(le=1)
