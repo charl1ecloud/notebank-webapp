@@ -4,37 +4,34 @@ import NavBar from "./components/NavBar";
 import Home from "./Home";
 import { Routes, Route } from "react-router-dom";
 import React from "react";
-import Upload from "./components/UploadNote/Upload";
-import Register from "./components/Register";
-import Login from "./components/Login/Login";
 import Profile from "./components/Profile";
-import PersistLogin from "./components/Login/PersistLogin";
-import ViewNotes from "./components/ViewNotes/ViewNotes";
-import { PageLayout } from "./StyleComponent";
+import PersistLogin from "./components/PersistLogin";
+import UploadNote from "./components/UploadNote";
+import Login from "./components/Login";
+import Results from "./components/Results";
+import Preview from "./components/Preview";
 
 function App() {
   return (
     <React.Fragment>
-      <PageLayout>
-        <NavBar />
+      <NavBar />
+      <div>
         <Routes>
           <Route element={<PersistLogin />}>
             <Route path="/" element={<Layout />}>
               <Route path="/" element={<Home />} />
               <Route path="/result" element={<Home />} />
               <Route element={<RequireAuth />}>
-                <Route path="/UploadNote" element={<Upload />} />
-              </Route>
-              <Route element={<RequireAuth />}>
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/UploadNotes" element={<UploadNote />} />
               </Route>
             </Route>
-            <Route path="/ViewNotes" element={<ViewNotes />} />
-            <Route path="/register" element={<Register />} />
             <Route path="/signin" element={<Login />} />
+            <Route path="/results" element={<Results />} />
+            <Route path="/preview" element={<Preview />} />
           </Route>
         </Routes>
-      </PageLayout>
+      </div>
     </React.Fragment>
   );
 }

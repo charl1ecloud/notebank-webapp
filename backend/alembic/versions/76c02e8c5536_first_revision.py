@@ -1,8 +1,8 @@
 """first revision
 
-Revision ID: ca6f7363f4be
+Revision ID: 76c02e8c5536
 Revises: 
-Create Date: 2022-11-20 12:33:58.337792
+Create Date: 2022-11-30 03:01:08.868282
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'ca6f7363f4be'
+revision = '76c02e8c5536'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -34,13 +34,12 @@ def upgrade():
     sa.Column('title', sa.String(), nullable=False),
     sa.Column('code', sa.String(), nullable=False),
     sa.Column('language', sa.String(), nullable=False),
-    sa.Column('link_of_file', sa.String(), nullable=False),
+    sa.Column('filename', sa.String(), nullable=False),
     sa.Column('year', sa.Integer(), nullable=False),
     sa.Column('uploaded_at', sa.TIMESTAMP(timezone=True), server_default=sa.text('now()'), nullable=False),
     sa.Column('owner_name', sa.String(), nullable=False),
     sa.ForeignKeyConstraint(['owner_name'], ['users.username'], ondelete='CASCADE'),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('link_of_file')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('comments',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),

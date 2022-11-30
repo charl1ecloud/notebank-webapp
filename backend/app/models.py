@@ -23,7 +23,7 @@ class Note(Base):
     title = Column(String, nullable=False)
     code = Column(String, nullable=False)
     language = Column(String, nullable=False)
-    link_of_file = Column(String, nullable=False, unique=True)
+    filename = Column(String, nullable=False)
     year = Column(Integer, nullable=False)
     uploaded_at = Column(TIMESTAMP(timezone=True),
                         nullable=False, server_default=text('now()'))

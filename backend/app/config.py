@@ -11,11 +11,6 @@ class Settings(BaseSettings):
     algorithm: str
     access_token_expire_minutes: int
     refresh_token_expire_minutes: int
-    connect_str: str
-    name: str
-    key: str
-    thumbnails: str
-    poppler: str
 
     class Config:
         env_file = ".env"

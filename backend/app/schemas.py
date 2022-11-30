@@ -1,13 +1,12 @@
 from pydantic import BaseModel, EmailStr
 from datetime import datetime
 from typing import Optional, List
-from pydantic.types import conint
 
 class NoteBase(BaseModel):
     title: str
     code: str
     language: str
-    link_of_file: str
+    filename: str
     year: int
 
 
