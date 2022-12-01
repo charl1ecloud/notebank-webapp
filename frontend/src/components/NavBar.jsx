@@ -62,9 +62,15 @@ export default function NavBar() {
         <Tabs
           sx={{
             color: theme.palette.textcolor.main,
-            marginLeft: "auto",
+            ml: "auto",
+            mr: 5,
           }}
           value={value}
+          TabIndicatorProps={{
+            style: {
+              display: "none",
+            },
+          }}
           onChange={(e, value) => {
             setValue(value);
           }}
@@ -74,6 +80,12 @@ export default function NavBar() {
               <Tab
                 value={index}
                 label={name}
+                sx={{
+                  fontFamily: `'Poppins', sans-serif`,
+                  fontWeight: 900,
+                  color: theme.palette.textcolor.main,
+                  textTransform: "none",
+                }}
                 onClick={() => {
                   navigate(
                     name == "Home" ? "/" : "/" + name.replace(/\s/g, "")

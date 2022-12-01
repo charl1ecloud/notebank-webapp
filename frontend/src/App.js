@@ -10,6 +10,7 @@ import UploadNote from "./components/UploadNote";
 import Login from "./components/Login";
 import Results from "./components/Results";
 import Preview from "./components/Preview";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           </Route>
         </Routes>
       </div>
+      <Footer />
     </React.Fragment>
   );
 }

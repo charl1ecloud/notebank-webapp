@@ -34,6 +34,7 @@ const theme = createTheme({
     },
     greywhite: {
       main: "#f7f7f7",
+      light: "f9f9f9",
     },
     textcolor: {
       main: "#36373a",
