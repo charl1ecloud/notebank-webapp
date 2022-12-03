@@ -7,7 +7,7 @@ import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
+import Avatar from "@mui/material/Avatar";
 import { useTheme } from "@mui/material/styles";
 import Login from "./Login";
 
@@ -97,10 +97,9 @@ export default function NavBar() {
         </Tabs>
 
         {auth.accessToken ? (
-          <i
-            className="fa-regular fa-circle-user"
-            onClick={() => navigate("/profile")}
-          ></i>
+          <Avatar alt="user" onClick={() => navigate("/profile")}>
+            C
+          </Avatar>
         ) : (
           <Login />
         )}
