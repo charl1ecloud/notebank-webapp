@@ -2,10 +2,11 @@ FROM python:3.9
 
 WORKDIR /usr/src/app
 
-COPY requirements.txt ./
+COPY . /usr/src/app
 
 RUN pip install -r requirements.txt
 
-COPY . .
+COPY migrate.sh /app/migrate.sh
+RUN chmod +x /app/migrate.sh
 
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+CMD ["/app/migrate.sh"]

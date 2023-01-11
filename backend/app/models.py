@@ -40,7 +40,7 @@ class Comment(Base):
     review_text = Column(String, default=None)
     timestamp = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()'))
     owner_name = Column(String, ForeignKey(
-        "users.username", ondelete="CASCADE"), nullable=False, primary_key=True)
-    note_id = Column(Integer, ForeignKey('notes.id', ondelete="CASCADE"), primary_key=True)
+        "users.username", ondelete="CASCADE"), nullable=False)
+    note_id = Column(Integer, ForeignKey('notes.id', ondelete="CASCADE"))
     doc = relationship("Note", back_populates="review")
 

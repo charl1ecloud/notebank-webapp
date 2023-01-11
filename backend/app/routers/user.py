@@ -1,6 +1,6 @@
 from fastapi import status, HTTPException, Depends, APIRouter
 from sqlalchemy.orm import Session
-from .. import models, schemas, utils
+from .. import models, schemas, utils, oauth2
 from ..database import get_db
 
 router = APIRouter(
@@ -22,12 +22,31 @@ async def create_user(user: schemas.UserBase, db: Session = Depends(get_db)):
 
     return new_user
 
+@router.get('/info', response_model=schemas.UserDisplay)
+async def get_user_info(db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
+    notes = db.query(models.Note).filter(models.Note.owner_name == current_user.username).all()
+    current_user.notes = notes
+    return current_user
+
+@router.put("/email", response_model=schemas.UserOut)
+async def update_email(email: str, db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
+    user = db.query(models.User).filter(models.User.id == current_user.id).first()
+    if not user:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f"User with id: {current_user.id} does not exist")
+
+    user.email = email
+    db.commit()
+    db.refresh(user)
+
+    return user
 
 @router.get('/{id}', response_model=schemas.UserOut)
-async def get_user(id: int, db: Session = Depends(get_db), ):
+async def get_user(id: int, db: Session = Depends(get_db)):
     user = db.query(models.User).filter(models.User.id == id).first()
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"User with id: {id} does not exist")
 
     return user
+

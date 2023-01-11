@@ -40,9 +40,12 @@ class Note(NoteBase):
 
 class UserDisplay(BaseModel):
     username: str
-    notes: List[Note]
+    notes: Optional[List[Note]]
     email: EmailStr
-    profile_pic_url: str
+    profile_pic_url: Optional[str]
+
+    class Config:
+        orm_mode = True
 
 class CommentBase(BaseModel):
     rating: int

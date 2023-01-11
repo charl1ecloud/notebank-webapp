@@ -63,7 +63,7 @@ export default function NavBar() {
           sx={{
             color: theme.palette.textcolor.main,
             ml: "auto",
-            mr: 5,
+            mr: 3,
           }}
           value={value}
           TabIndicatorProps={{
@@ -97,7 +97,11 @@ export default function NavBar() {
         </Tabs>
 
         {auth.accessToken ? (
-          <Avatar alt="user" onClick={() => navigate("/profile")}>
+          <Avatar
+            alt="user"
+            onClick={() => navigate("/profile")}
+            sx={{ cursor: "pointer" }}
+          >
             C
           </Avatar>
         ) : (
