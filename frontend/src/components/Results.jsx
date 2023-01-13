@@ -1,11 +1,11 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import Note from "./Note";
+import NoteCard from "./NoteCard";
 
 export default function Results() {
   const { state } = useLocation();
   const notes = state.map((note) => {
-    return <Note {...note} />;
+    return <NoteCard note={note} />;
   });
   return <div>{notes}</div>;
 }

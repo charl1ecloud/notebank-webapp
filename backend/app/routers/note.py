@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from typing import List, Optional
 from .. import models, schemas, oauth2
 from ..database import get_db
-from ..utils import s3_instance
+from ..utils import s3_instance, generate_preview
 from pydantic import ValidationError
 import io
 
@@ -31,13 +31,13 @@ async def get_notes(db: Session = Depends(get_db), limit: int = 10, skip: int = 
 
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.Note)
 async def create_notes(note: schemas.NoteCreate = Depends(checker), db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user),file: UploadFile = File(...), s3 = Depends(s3_instance)):
-    s3.Bucket("notebank").upload_fileobj(file.file, file.filename)
-    new_note = models.Note(owner_name=current_user.username, **note.dict())
+    pdf_bytes = await file.read()
+    preview_url = generate_preview(pdf_bytes, s3, file.filename) 
+    new_note = models.Note(owner_name=current_user.username, preview=preview_url, **note.dict())
     db.add(new_note)
     db.commit()
     db.refresh(new_note)
-
-    return new_note
+    return new_note 
 
 @router.get("/{id}")
 async def get_note(background_tasks: BackgroundTasks, id: int, db: Session = Depends(get_db), s3 = Depends(s3_instance)):

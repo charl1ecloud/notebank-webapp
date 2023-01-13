@@ -25,6 +25,7 @@ class Note(Base):
     language = Column(String, nullable=False)
     filename = Column(String, nullable=False)
     year = Column(Integer, nullable=False)
+    preview= Column(String, nullable=False)
     uploaded_at = Column(TIMESTAMP(timezone=True),
                         nullable=False, server_default=text('now()'))
     owner_name = Column(String, ForeignKey(

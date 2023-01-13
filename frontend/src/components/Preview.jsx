@@ -7,7 +7,6 @@ import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 
 export default function Preview() {
   const { state } = useLocation();
-
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
 

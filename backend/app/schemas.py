@@ -34,6 +34,7 @@ class Note(NoteBase):
     uploaded_at: datetime
     owner_name: str
     owner: UserOut
+    preview: str
 
     class Config:
         orm_mode = True

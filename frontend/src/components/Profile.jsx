@@ -10,7 +10,7 @@ import useRefresh from "../context/useRefresh";
 import axios from "../api/axios";
 import Grid from "@mui/material/Grid";
 import VerticalNav from "./VerticalNav";
-import NoteUser from "./NoteUser";
+import NoteCard from "./NoteCard";
 import EditButton from "./EditButton";
 import { useTheme } from "@mui/material/styles";
 
@@ -133,8 +133,8 @@ export default function Profile() {
                     {user.notes.length > 5
                       ? user.notes
                           .slice(0, 5)
-                          .map((note) => <NoteUser note={note} />)
-                      : user.notes.map((note) => <NoteUser note={note} />)}
+                          .map((note) => <NoteCard note={note} />)
+                      : user.notes.map((note) => <NoteCard note={note} />)}
 
                     {user.notes.length > 5 && (
                       <Button
