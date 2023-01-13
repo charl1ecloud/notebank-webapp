@@ -1,55 +1,81 @@
 from pydantic import BaseModel, EmailStr
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List
 
-from pydantic.types import conint
-
-
-class PostBase(BaseModel):
+class NoteBase(BaseModel):
     title: str
-    content: str
-    published: bool = True
+    code: str
+    language: str
+    filename: str
+    year: int
 
 
-class PostCreate(PostBase):
+class NoteCreate(NoteBase):
     pass
+
+
+class UserBase(BaseModel):
+    email: EmailStr
+    password: str
+    username: str
 
 
 class UserOut(BaseModel):
     id: int
     email: EmailStr
+    username: str
     created_at: datetime
 
     class Config:
         orm_mode = True
 
-
-class Post(PostBase):
+class Note(NoteBase):
     id: int
-    created_at: datetime
-    owner_id: int
+    uploaded_at: datetime
+    owner_name: str
     owner: UserOut
+    preview: str
+
+    class Config:
+        orm_mode = True
+
+class UserDisplay(BaseModel):
+    username: str
+    notes: Optional[List[Note]]
+    email: EmailStr
+    profile_pic_url: Optional[str]
+
+    class Config:
+        orm_mode = True
+
+class CommentBase(BaseModel):
+    rating: int
+    review_text: Optional[str] = None
+    note_id: int
+
+class CommentDisplay(BaseModel):
+    rating: int
+    review_text: Optional[str] = None
+    username: str
+    timestamp: datetime
+
+    class Config:
+        orm_mode = True
+
+class CommentOut(CommentBase):
+    id: int
+    owner_name: str
+    timestamp: datetime
 
     class Config:
         orm_mode = True
 
 
-class PostOut(BaseModel):
-    Post: Post
-    votes: int
+class NoteDisplay(Note):
+    comments: Optional[List[CommentOut]]
 
     class Config:
         orm_mode = True
-
-
-class UserCreate(BaseModel):
-    email: EmailStr
-    password: str
-
-
-class UserLogin(BaseModel):
-    email: EmailStr
-    password: str
 
 
 class Token(BaseModel):
@@ -59,8 +85,3 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     id: Optional[str] = None
-
-
-class Vote(BaseModel):
-    post_id: int
-    dir: conint(le=1)

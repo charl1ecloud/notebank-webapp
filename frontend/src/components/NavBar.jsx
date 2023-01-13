@@ -1,56 +1,113 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import {
-  NavbarWrapper,
-  LinksWrapper,
-  NavbarLink,
-  Logo,
-  LogoLeft,
-  LogoRight,
-  SigninButton,
-} from "../StyleComponent";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import useAuth from "../context/AuthProvider";
+import AppBar from "@mui/material/AppBar";
+import Tab from "@mui/material/Tab";
+import Tabs from "@mui/material/Tabs";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import Avatar from "@mui/material/Avatar";
+import { useTheme } from "@mui/material/styles";
+import Login from "./Login";
 
 export default function NavBar() {
+  const theme = useTheme();
   let navigate = useNavigate();
   const { auth } = useAuth();
+  const [value, setValue] = useState(0);
 
-  const linkNames = ["About Us", "View Notes", "Resources", "Contact"];
-
-  const links = linkNames.map((name, value) => {
-    return (
-      <NavbarLink
-        key={value}
-        to={name == "Home" ? "/" : "/" + name.replace(/\s/g, "")}
-      >
-        {name}
-      </NavbarLink>
-    );
-  });
+  const pages = ["Home", "Temp Link", "Temp Link", "Upload Notes"];
 
   return (
-    <NavbarWrapper>
-      <Logo>
-        <LogoLeft onClick={() => navigate("/")}>Note</LogoLeft>
-        <LogoRight onClick={() => navigate("/")}>Bank</LogoRight>
-      </Logo>
-      <LinksWrapper>
-        {links}
+    <AppBar
+      sx={{ background: theme.palette.greywhite.main, p: 2 }}
+      position="static"
+    >
+      <Toolbar>
+        <Typography
+          component="span"
+          display="flex"
+          sx={{ cursor: "pointer" }}
+          onClick={() => {
+            setValue(0);
+            navigate("/");
+          }}
+        >
+          <Typography
+            sx={{
+              p: 1,
+              borderTopLeftRadius: 5,
+              borderBottomLeftRadius: 5,
+              bgcolor: theme.palette.primary.main,
+              fontSize: 20,
+              fontWeight: 900,
+            }}
+          >
+            Note
+          </Typography>
+          <Typography
+            sx={{
+              p: 1,
+              borderTopRightRadius: 5,
+              borderBottomRightRadius: 5,
+              fontSize: 20,
+              bgcolor: theme.palette.secondary.main,
+              fontWeight: 900,
+            }}
+          >
+            Bank
+          </Typography>
+        </Typography>
+        <Tabs
+          sx={{
+            color: theme.palette.textcolor.main,
+            ml: "auto",
+            mr: 3,
+          }}
+          value={value}
+          TabIndicatorProps={{
+            style: {
+              display: "none",
+            },
+          }}
+          onChange={(e, value) => {
+            setValue(value);
+          }}
+        >
+          {pages.map((name, index) => {
+            return (
+              <Tab
+                value={index}
+                label={name}
+                sx={{
+                  fontFamily: `'Poppins', sans-serif`,
+                  fontWeight: 900,
+                  color: theme.palette.textcolor.main,
+                  textTransform: "none",
+                }}
+                onClick={() => {
+                  navigate(
+                    name == "Home" ? "/" : "/" + name.replace(/\s/g, "")
+                  );
+                }}
+              />
+            );
+          })}
+        </Tabs>
+
         {auth.accessToken ? (
-          <i
-            className="fa-regular fa-circle-user"
+          <Avatar
+            alt="user"
             onClick={() => navigate("/profile")}
-          ></i>
-        ) : window.location.pathname == "/signin" ? (
-          <SigninButton disabled onClick={() => navigate("signin")}>
-            Sign In
-          </SigninButton>
+            sx={{ cursor: "pointer" }}
+          >
+            C
+          </Avatar>
         ) : (
-          <SigninButton onClick={() => navigate("signin")}>
-            Sign In
-          </SigninButton>
+          <Login />
         )}
-      </LinksWrapper>
-    </NavbarWrapper>
+      </Toolbar>
+    </AppBar>
   );
 }

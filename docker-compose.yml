@@ -1,0 +1,45 @@
+version: '3'
+services:
+  backend:
+    build: ./backend
+    ports:
+      - 8000:8000
+    environment:
+      - WATCHPACK_POLLING=true
+    env_file:
+      - .env
+    volumes:
+      - ./backend:/usr/src/app
+    depends_on:
+      - postgres
+  frontend:
+    build: ./frontend
+    environment:
+      - WATCHPACK_POLLING=true
+    ports:
+      - 3000:3000
+    depends_on:
+      - backend
+    volumes:
+      - /app/node_modules
+      - ./frontend:/app
+  postgres:
+    image: postgres
+    env_file:
+      - .env
+    ports:
+      - "5429:5432"
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=pgadmin4@pgadmin.org
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+volumes:
+  postgres-db:

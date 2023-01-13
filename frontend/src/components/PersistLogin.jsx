@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { useState, useEffect } from "react";
-import useRefresh from "../../context/useRefresh";
-import useAuth from "../../context/AuthProvider";
+import useRefresh from "../context/useRefresh";
+import useAuth from "../context/AuthProvider";
 
 const PersistLogin = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -21,8 +21,6 @@ const PersistLogin = () => {
       }
     };
 
-    // persist added here AFTER tutorial video
-    // Avoids unwanted call to verifyRefreshToken
     !auth?.accessToken && persist ? verifyRefreshToken() : setIsLoading(false);
 
     return () => (isMounted = false);

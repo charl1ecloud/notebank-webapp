@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql.expression import text
 from sqlalchemy.sql.sqltypes import TIMESTAMP
@@ -13,26 +13,35 @@ class User(Base):
     password = Column(String, nullable=False)
     created_at = Column(TIMESTAMP(timezone=True),
                         nullable=False, server_default=text('now()'))
+    username = Column(String, nullable=False, unique=True)
+    profile_pic_url = Column(String, default=None)
+    items = relationship('Note', back_populates='owner')
 
-
-class Vote(Base):
-    __tablename__ = "votes"
-    user_id = Column(Integer, ForeignKey(
-        "users.id", ondelete="CASCADE"), primary_key=True)
-    post_id = Column(Integer, ForeignKey(
-        "posts.id", ondelete="CASCADE"), primary_key=True)
-
-
-class Post(Base):
-    __tablename__ = "posts"
-
+class Note(Base):
+    __tablename__ = "notes"
     id = Column(Integer, primary_key=True, nullable=False)
     title = Column(String, nullable=False)
-    content = Column(String, nullable=False)
-    published = Column(Boolean, server_default='TRUE', nullable=False)
-    created_at = Column(TIMESTAMP(timezone=True),
+    code = Column(String, nullable=False)
+    language = Column(String, nullable=False)
+    filename = Column(String, nullable=False)
+    year = Column(Integer, nullable=False)
+    preview= Column(String, nullable=False)
+    uploaded_at = Column(TIMESTAMP(timezone=True),
                         nullable=False, server_default=text('now()'))
-    owner_id = Column(Integer, ForeignKey(
-        "users.id", ondelete="CASCADE"), nullable=False)
+    owner_name = Column(String, ForeignKey(
+        "users.username", ondelete="CASCADE"), nullable=False)
 
-    owner = relationship("User")
+    owner = relationship("User", back_populates='items')
+    review = relationship("Comment", back_populates='doc')
+
+class Comment(Base):
+    __tablename__ = "comments"
+    id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
+    rating = Column(Integer, nullable=False)
+    review_text = Column(String, default=None)
+    timestamp = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()'))
+    owner_name = Column(String, ForeignKey(
+        "users.username", ondelete="CASCADE"), nullable=False)
+    note_id = Column(Integer, ForeignKey('notes.id', ondelete="CASCADE"))
+    doc = relationship("Note", back_populates="review")
+
