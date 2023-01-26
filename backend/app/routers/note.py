@@ -32,8 +32,8 @@ async def get_notes(db: Session = Depends(get_db), limit: int = 10, skip: int = 
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=schemas.Note)
 async def create_notes(note: schemas.NoteCreate = Depends(checker), db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user),file: UploadFile = File(...), s3 = Depends(s3_instance)):
     pdf_bytes = await file.read()
-    preview_url = generate_preview(pdf_bytes, s3, file.filename) 
-    new_note = models.Note(owner_name=current_user.username, preview=preview_url, **note.dict())
+    preview_url, page_count = generate_preview(pdf_bytes, s3, file.filename) 
+    new_note = models.Note(page_count=page_count, owner_name=current_user.username, preview=preview_url, **note.dict())
     db.add(new_note)
     db.commit()
     db.refresh(new_note)

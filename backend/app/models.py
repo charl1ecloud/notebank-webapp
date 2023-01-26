@@ -22,9 +22,10 @@ class Note(Base):
     id = Column(Integer, primary_key=True, nullable=False)
     title = Column(String, nullable=False)
     code = Column(String, nullable=False)
-    language = Column(String, nullable=False)
+    note_type = Column(String, nullable=False)
     filename = Column(String, nullable=False)
-    year = Column(Integer, nullable=False)
+    academic_year = Column(String, nullable=False)
+    page_count = Column(Integer, nullable=False)
     preview= Column(String, nullable=False)
     uploaded_at = Column(TIMESTAMP(timezone=True),
                         nullable=False, server_default=text('now()'))

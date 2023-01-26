@@ -25,10 +25,11 @@ def generate_preview(pdf_bytes, s3, filename):
         pdf = fitz.open(temp.name)
         if pdf.page_count == 0:
             raise ValueError("The pdf document is empty")
+        page_count = pdf.page_count
         page = pdf[0]
         preview_path = f"{temp.name}.png"
         page.getPixmap().save(preview_path)
         pdf.close()
         temp.close()
         s3.Bucket("notebank").upload_file(preview_path, preview_path)
-        return f"https://notebank.s3.amazonaws.com/{preview_path}"
+        return f"https://notebank.s3.amazonaws.com/{preview_path}", page_count

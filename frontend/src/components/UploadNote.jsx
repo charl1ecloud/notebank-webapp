@@ -33,8 +33,8 @@ const UploadNote = () => {
   const [fileName, setFileName] = React.useState("");
   const [title, setTitle] = React.useState("");
   const [code, setCode] = React.useState("");
-  const [language, setLanguage] = React.useState("");
-  const [year, setYear] = React.useState(null);
+  const [noteType, setNoteType] = React.useState("");
+  const [academicYear, setYear] = React.useState(null);
   const [errMsg, setErrMsg] = React.useState("");
   const [activeStep, setActiveStep] = React.useState(0);
 
@@ -63,8 +63,8 @@ const UploadNote = () => {
   const handleCodeChange = (e) => {
     setCode(e.target.value);
   };
-  const handleLanguageChange = (e) => {
-    setLanguage(e.target.value);
+  const handleNoteTypeChange = (e) => {
+    setNoteType(e.target.value);
   };
   const handleYearChange = (e) => {
     setYear(e.target.value);
@@ -104,7 +104,7 @@ const UploadNote = () => {
 
   useEffect(() => {
     setErrMsg("");
-  }, [title, code, year, language, file]);
+  }, [title, code, academicYear, noteType, file]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -116,9 +116,9 @@ const UploadNote = () => {
         JSON.stringify({
           title: title,
           code: code,
-          language: language,
+          note_type: noteType,
           filename: fileName,
-          year: year,
+          academic_year: academicYear,
         })
       );
       formdata.append("file", file);
@@ -132,7 +132,7 @@ const UploadNote = () => {
       setError("");
       setTitle("");
       setCode("");
-      setLanguage("");
+      setNoteType("");
       setYear(null);
       setActiveStep(2);
     } catch (err) {
@@ -140,7 +140,6 @@ const UploadNote = () => {
         setErrMsg("* No Server Response");
       } else {
         setErrMsg("* Upload Failed");
-        console.log(err.response);
       }
     }
   };
@@ -318,9 +317,9 @@ const UploadNote = () => {
                     <TextField
                       required
                       fullWidth
-                      label="Language"
-                      onChange={handleLanguageChange}
-                      value={language}
+                      label="Type of note"
+                      onChange={handleNoteTypeChange}
+                      value={noteType}
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
@@ -328,9 +327,8 @@ const UploadNote = () => {
                       required
                       fullWidth
                       label="Year taken"
-                      type="number"
                       onChange={handleYearChange}
-                      value={year}
+                      value={academicYear}
                     />
                   </Grid>
                 </Grid>

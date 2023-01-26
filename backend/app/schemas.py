@@ -5,9 +5,9 @@ from typing import Optional, List
 class NoteBase(BaseModel):
     title: str
     code: str
-    language: str
+    note_type: str
     filename: str
-    year: int
+    academic_year: str
 
 
 class NoteCreate(NoteBase):
@@ -35,6 +35,7 @@ class Note(NoteBase):
     owner_name: str
     owner: UserOut
     preview: str
+    page_count: int
 
     class Config:
         orm_mode = True
