@@ -1,4 +1,3 @@
-import Layout from "./context/Layout";
 import RequireAuth from "./context/RequireAuth";
 import NavBar from "./components/NavBar";
 import Home from "./Home";
@@ -19,17 +18,14 @@ function App() {
       <div>
         <Routes>
           <Route element={<PersistLogin />}>
-            <Route path="/" element={<Layout />}>
-              <Route path="/" element={<Home />} />
-              <Route path="/result" element={<Home />} />
-              <Route element={<RequireAuth />}>
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/UploadNotes" element={<UploadNote />} />
-              </Route>
-            </Route>
+            <Route path="/" element={<Home />} />
             <Route path="/signin" element={<Login />} />
             <Route path="/results" element={<Results />} />
             <Route path="/preview" element={<Preview />} />
+            <Route element={<RequireAuth />}>
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/UploadNotes" element={<UploadNote />} />
+            </Route>
           </Route>
         </Routes>
       </div>

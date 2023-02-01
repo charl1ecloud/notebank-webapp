@@ -7,17 +7,18 @@ import ListItemText from "@mui/material/ListItemText";
 import PersonIcon from "@mui/icons-material/Person";
 import NotesIcon from "@mui/icons-material/Notes";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import { useNavigate } from "react-router-dom";
 import useLogout from "../context/useLogout";
 import { useTheme } from "@mui/material/styles";
+import { useNavigate } from "react-router-dom";
 
 const VerticalNav = () => {
-  const navigate = useNavigate();
   const logout = useLogout();
+  const navigate = useNavigate();
 
   const signOut = async () => {
     await logout();
     navigate("/");
+    window.location.reload();
   };
 
   const theme = useTheme();

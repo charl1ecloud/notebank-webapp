@@ -10,14 +10,41 @@ import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import { useTheme } from "@mui/material/styles";
 import Login from "./Login";
+import useRefresh from "../context/useRefresh";
+import axios from "../api/axios";
+
+const INFO_URL = "/users/info";
 
 export default function NavBar() {
+  const refresh = useRefresh();
   const theme = useTheme();
   let navigate = useNavigate();
   const { auth } = useAuth();
   const [value, setValue] = useState(0);
+  const [user, setUser] = React.useState(null);
 
   const pages = ["Home", "Temp Link", "Temp Link", "Upload Notes"];
+
+  React.useEffect(() => {
+    async function getData() {
+      try {
+        const newToken = await refresh();
+        const response = await axios.get(INFO_URL, {
+          headers: {
+            Authorization: `Bearer ${newToken}`,
+          },
+        });
+        setUser(response["data"]);
+      } catch (err) {
+        if (!err?.response) {
+          console.log("* No Server Response");
+        } else {
+          console.log(err.response);
+        }
+      }
+    }
+    getData();
+  }, []);
 
   return (
     <AppBar
@@ -99,10 +126,10 @@ export default function NavBar() {
         {auth.accessToken ? (
           <Avatar
             alt="user"
-            onClick={() => navigate("/profile")}
+            onClick={() => navigate("/profile", { state: user })}
             sx={{ cursor: "pointer" }}
           >
-            C
+            {user?.User.username[0].toUpperCase()}
           </Avatar>
         ) : (
           <Login />

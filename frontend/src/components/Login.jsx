@@ -82,6 +82,7 @@ const Login = () => {
       setUser("");
       setPwd("");
       navigate(from, { replace: true });
+      window.location.reload();
     } catch (err) {
       setErrMsg("* Login Failed");
     }

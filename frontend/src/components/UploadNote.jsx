@@ -29,12 +29,12 @@ const UploadNote = () => {
   const drop = React.useRef(null);
 
   const [error, setError] = React.useState("");
-  const [file, setFile] = React.useState(null);
+  const [file, setFile] = React.useState("");
   const [fileName, setFileName] = React.useState("");
   const [title, setTitle] = React.useState("");
   const [code, setCode] = React.useState("");
   const [noteType, setNoteType] = React.useState("");
-  const [academicYear, setYear] = React.useState(null);
+  const [academicYear, setYear] = React.useState("");
   const [errMsg, setErrMsg] = React.useState("");
   const [activeStep, setActiveStep] = React.useState(0);
 
@@ -127,13 +127,13 @@ const UploadNote = () => {
           Authorization: `Bearer ${newToken}`,
         },
       });
-      setFile(null);
+      setFile("");
       setFileName("");
       setError("");
       setTitle("");
       setCode("");
       setNoteType("");
-      setYear(null);
+      setYear("");
       setActiveStep(2);
     } catch (err) {
       if (!err?.response) {

@@ -19,7 +19,7 @@ export default function Results() {
   });
   return (
     <>
-      <ResultHeader code={state[0].code} />
+      <ResultHeader code={state[0].Note.code} />
       <Container>
         <Typography>{notes.length} result(s)</Typography>
         <Grid

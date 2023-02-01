@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .routers import comment, note, user, auth
+from .routers import comment, note, user, auth, vote
 
 app = FastAPI()
 
@@ -18,6 +18,7 @@ app.include_router(note.router)
 app.include_router(user.router)
 app.include_router(auth.router)
 app.include_router(comment.router)
+app.include_router(vote.router)
 
 
 @app.get("/")

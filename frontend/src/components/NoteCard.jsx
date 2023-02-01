@@ -20,9 +20,7 @@ export default function NoteCard({ note }) {
   const navigate = useNavigate();
 
   const handleView = async (id) => {
-    const response = await axios.get(`/notes/${id}`, {
-      responseType: "arraybuffer",
-    });
+    const response = await axios.get(`/notes/${id}`);
     navigate("/preview", { state: response.data });
   };
 
@@ -43,21 +41,21 @@ export default function NoteCard({ note }) {
           width: "100%",
           p: 4,
         }}
-        onClick={() => handleView(note.id)}
+        onClick={() => handleView(note.Note.id)}
       >
         <CardHeader
           sx={{ width: "100%" }}
           avatar={
             <Avatar sx={{ height: 24, width: 24 }}>
-              {note.owner_name.charAt(0).toUpperCase()}
+              {note.Note.owner.username.charAt(0).toUpperCase()}
             </Avatar>
           }
-          title={note.owner_name}
+          title={note.Note.owner.username}
           action={
             <Chip
               size="small"
               icon={<SummarizeIcon />}
-              label={note.note_type}
+              label={note.Note.note_type}
               sx={{ mt: 2 }}
             />
           }
@@ -68,7 +66,7 @@ export default function NoteCard({ note }) {
               component="div"
               sx={{ opacity: 0.7 }}
             >
-              {note.academic_year}
+              {note.Note.academic_year}
             </Typography>
           }
         />
@@ -82,13 +80,13 @@ export default function NoteCard({ note }) {
             height: 200,
             border: "1px solid #e0e0e0",
           }}
-          image={note.preview}
-          alt={note.title}
+          image={note.Note.preview}
+          alt={note.Note.title}
         />
 
         <CardContent>
           <Typography gutterBottom variant="h6" component="div">
-            {note.title}
+            {note.Note.title}
           </Typography>
           <Typography
             component="div"
@@ -105,19 +103,38 @@ export default function NoteCard({ note }) {
             >
               <AutoStoriesIcon sx={{ color: "#e0e0e0" }} />
               <Typography variant="body2" sx={{ ml: 0.5 }}>
-                {note.page_count} pages
+                {note.Note.page_count} pages
               </Typography>
             </Typography>
             <Typography
               component="div"
               sx={{ display: "flex", alignItems: "center" }}
             >
-              <ThumbUpAltIcon sx={{ color: "#57e32c" }} />
+              {note.votes == 0 ? (
+                <>
+                  <ThumbUpAltIcon sx={{ color: "grey" }} />
+                  <Typography variant="body2" sx={{ ml: 0.5 }}>
+                    0%
+                  </Typography>
+                </>
+              ) : note.likes / note.votes >= 0.5 ? (
+                <>
+                  <ThumbUpAltIcon sx={{ color: "#57e32c" }} />
+                  <Typography variant="body2" sx={{ ml: 0.5 }}>
+                    {(note.likes / note.votes) * 100}%
+                  </Typography>
+                </>
+              ) : (
+                <>
+                  <ThumbDownAltIcon sx={{ color: "red" }} />
+                  <Typography variant="body2" sx={{ ml: 0.5 }}>
+                    {(note.likes / note.votes) * 100}%
+                  </Typography>
+                </>
+              )}
+
               <Typography variant="body2" sx={{ ml: 0.5 }}>
-                100%
-              </Typography>
-              <Typography variant="body2" sx={{ ml: 0.5 }}>
-                (3)
+                ({note.votes})
               </Typography>
             </Typography>
           </Typography>

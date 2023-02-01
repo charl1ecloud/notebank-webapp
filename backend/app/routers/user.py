@@ -2,6 +2,7 @@ from fastapi import status, HTTPException, Depends, APIRouter
 from sqlalchemy.orm import Session
 from .. import models, schemas, utils, oauth2
 from ..database import get_db
+from sqlalchemy import func, case
 
 router = APIRouter(
     prefix="/users",
@@ -24,8 +25,12 @@ async def create_user(user: schemas.UserBase, db: Session = Depends(get_db)):
 
 @router.get('/info', response_model=schemas.UserDisplay)
 async def get_user_info(db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
-    notes = db.query(models.Note).filter(models.Note.owner_name == current_user.username).all()
-    current_user.notes = notes
+    notes = db.query(models.Note, func.count(models.Vote.note_id).label("votes"), (func.count(case([(models.Vote.value == 1, 1)], else_=None))).label("likes"), (func.count(case([(models.Vote.value == -1, 1)], else_=None))).label("dislikes")).join(models.Vote, models.Vote.note_id == models.Note.id, isouter=True).group_by(models.Note.id).filter(models.Note.owner_id == current_user.id).all()
+    notes_display = [schemas.NotesDisplay(Note=note[0], votes=note[1], likes=note[2], dislikes=note[3]) for note in notes]
+    return schemas.UserDisplay(User=current_user,notes=notes_display)
+
+@router.get("/basicinfo", response_model=schemas.UserOut)
+async def get_basic_user_info(db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
     return current_user
 
 @router.put("/email", response_model=schemas.UserOut)

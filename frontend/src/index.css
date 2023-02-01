@@ -1,0 +1,18 @@
+.react-pdf__Page {
+    margin-top: 1rem;
+    
+  }
+.react-pdf__Page__textContent {
+box-shadow: 3px 3px 3px 1px #ccc;
+border-radius: 10px;
+
+}
+
+.react-pdf__Page__annotations.annotationLayer {
+padding: 20px;
+}
+
+.react-pdf__Page__canvas {
+margin: 0 auto;
+border-radius: 10px;
+}
